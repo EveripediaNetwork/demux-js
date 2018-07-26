@@ -16,17 +16,27 @@ export default class MongoBlock implements Block {
   protected collectActionsFromBlock(rawBlock: any = { actions: [] }): EosAction[] {
     return this.flattenArray(rawBlock.map((trx: any) => {
       return trx.actions.map((action: any, actionIndex: number) => {
+
         // Delete unneeded hex data if we have deserialized data
-        if (action.data) {
-          delete action.hex_data // eslint-disable-line
+        if (action.payload) {
+          delete action.payload.hex_data // eslint-disable-line
         }
 
-        return {
-          type: `${action.account}::${action.name}`,
+        console.info({
+          type: action.type,
           payload: {
             transactionId: rawBlock.trx_id,
             actionIndex,
-            ...action,
+            ...action.payload,
+          },
+        })
+
+        return {
+          type: action.type,
+          payload: {
+            transactionId: rawBlock.trx_id,
+            actionIndex,
+            ...action.payload,
           },
         }
       })

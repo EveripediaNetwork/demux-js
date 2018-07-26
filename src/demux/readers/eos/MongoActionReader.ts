@@ -40,8 +40,8 @@ export default class MongoActionReader extends AbstractActionReader {
   }
 
   public async getBlock(blockNumber: number): Promise<MongoBlock> {
-    // Transactions need to include the block_num and we should
-    // replace ref_block_num with block_num
+    // Need to start querying blocks and getting transactions from
+    // them
     const rawBlock = await this.mongodb.collection("transactions")
       .find({ "transaction_header.ref_block_num": blockNumber })
       .toArray()
