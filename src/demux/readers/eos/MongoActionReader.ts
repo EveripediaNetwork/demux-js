@@ -26,7 +26,7 @@ export default class MongoActionReader extends AbstractActionReader {
   }
 
   public async getHeadBlockNumber(): Promise<number> {
-    const [blockInfo] = await this.mongodb.collection("block_states")
+    const [ blockInfo ] = await this.mongodb.collection("block_states")
       .find({})
       .limit(1)
       .sort({ $natural: -1 })
@@ -36,11 +36,13 @@ export default class MongoActionReader extends AbstractActionReader {
       return blockInfo.block_header_state.dpos_irreversible_blocknum
     }
 
-    return blockInfo.block_num
+    return blockInfo.block_header_state.block_num
   }
 
   public async getBlock(blockNumber: number): Promise<MongoBlock> {
-    const [ rawBlock ] = await this.mongodb.collection("transactions")
+    // Transactions need to include the block_num and we should
+    // replace ref_block_num with block_num
+    const rawBlock = await this.mongodb.collection("transactions")
       .find({ "transaction_header.ref_block_num": blockNumber })
       .toArray()
 
