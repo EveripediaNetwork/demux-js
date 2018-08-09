@@ -6,12 +6,6 @@ class TestActionHandler extends AbstractActionHandler {
   public async handleWithState() {}
 
   // tslint:disable-next-line
-  protected async loadIndexState(): Promise<IndexState> { return { blockNumber: 0, blockHash: "" } }
-
-  // tslint:disable-next-line
-  protected async updateIndexState() {}
-
-  // tslint:disable-next-line
   public async rollbackTo() {}
 
   public setLastProcessedBlockHash(hash: string) {
@@ -29,9 +23,15 @@ class TestActionHandler extends AbstractActionHandler {
   public _runEffects(state: any, block: Block, context: any) {
     this.runEffects(state, block, context)
   }
+
+  // tslint:disable-next-line
+  protected async loadIndexState(): Promise<IndexState> { return { blockNumber: 0, blockHash: "" } }
+
+  // tslint:disable-next-line
+  protected async updateIndexState() {}
 }
 
-const rawBlock= {
+const rawBlock = {
   actions: [
     {
       payload: {
@@ -73,6 +73,7 @@ const rawBlock= {
   blockHash: "000f4241873a9aef0daefd47d8821495b6f61c4d1c73544419eb0ddc22a9e906",
   blockNumber: 20,
   previousBlockHash: "000f42401b5636c3c1d88f31fe0e503654091fb822b0ffe21c7d35837fc9f3d8",
+  timestamp: new Date("2018-06-09T11:56:39.000"),
 }
 
 describe("BaseActionHandler", () => {
@@ -113,6 +114,7 @@ describe("BaseActionHandler", () => {
       blockHash: "",
       blockNumber: 0,
       previousBlockHash: "",
+      timestamp: new Date("2018-06-06T11:53:37.000"),
       actions: [
         {
           payload: {
