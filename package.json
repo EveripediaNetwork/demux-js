@@ -1,9 +1,9 @@
 {
-  "name": "demux-js",
-  "version": "0.0.1-docs",
+  "name": "demux-js-mysql",
+  "version": "0.0.6",
   "author": {
-    "name": "Julien Heller",
-    "url": "https://block.one/"
+    "name": "Kedar Iyer",
+    "url": "https://libertyblock.io/"
   },
   "license": "MIT",
   "description": "Deterministic event-sourced state and side effect handling for blockchain applications",
